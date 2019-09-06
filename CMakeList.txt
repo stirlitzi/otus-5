@@ -1,6 +1,18 @@
-cmake_minimum_required(VERSION 3.13)
-project(editor)
+cmake_minimum_required(VERSION 3.2)
+
+if($ENV{TRAVIS_BUILD_NUMBER})
+    project(otus-5 VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+else()
+    project(otus-5 VERSION 0.0.2)
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(editor main.cpp Model.cpp Model.h View.cpp View.h Controller.cpp Controller.h Figure.h Figure.cpp)
+add_executable(otus-5 main.cpp Model.cpp Model.h View.cpp View.h Controller.cpp Controller.h Figure.h Figure.cpp)
+install(TARGETS otus-5 RUNTIME DESTINATION bin)
+set(CPACK_GENERATOR DEB)
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+set(CPACK_PACKAGE_CONTACT example@example.com)
+include(CPack)
